@@ -16,16 +16,15 @@ function listenForClicks() {
      */
     function flipCoin(tabs) {
       let randNum = Math.floor(Math.random() * 2);
-      let coinSide = randNum == 0 ? "heads" : "tails";
       browser.tabs
         .sendMessage(tabs[0].id, {
           command: "getCoordinates",
         })
-        .then((coordinates) => {
+        .then((response) => {
           browser.tabs.sendMessage(tabs[0].id, {
             command: "flip",
-            posX: coordinates[coinSide].posX,
-            posY: coordinates[coinSide].posY,
+            posX: response.coords[randNum].posX,
+            posY: response.coords[randNum].posY,
           });
         });
     }
